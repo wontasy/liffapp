@@ -12,10 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set LIFF_ID environment variables
+      - name: Set LIFF_ID and GAS_WEB_APP_URL environment variables
         run: |
           echo "LIFF_ID_SITSUMONSOUDAN=${{ secrets.LIFF_ID_SITSUMONSOUDAN }}" >> $GITHUB_ENV
           echo "LIFF_ID_SIIRESOUDAN=${{ secrets.LIFF_ID_SIIRESOUDAN }}" >> $GITHUB_ENV
+          echo "GAS_WEB_APP_URL=${{ secrets.GAS_WEB_APP_URL }}" >> $GITHUB_ENV
 
       - name: Generate config.js
         run: |
