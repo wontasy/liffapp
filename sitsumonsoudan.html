@@ -71,7 +71,13 @@
                 const theme  = $('select[name="theme"]').val();
                 const syurui = $('select[name="syurui"]').val();
                 const naiyou = $('textarea[name="naiyou"]').val();
-                const msg = `テーマ: ${theme}\n種類: ${syurui}\n内容: ${naiyou}`;
+                const msg = `質問・相談
+
+テーマ: ${theme}
+
+種類: ${syurui}
+
+内容: ${naiyou}`;
                 sendText(msg);
                 return false;
             });
