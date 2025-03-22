@@ -8,7 +8,7 @@
     <script src="config.js"></script>
 </head>
 <body>
-    <form class="w-75 mx-auto">
+    <form class="w-75 mx-auto" id="myForm">
         <p class="mt-3">テーマを教えてください！</p>
         <div>
             <select class="form-control w-100 mt-1" name="theme" required>
@@ -44,42 +44,35 @@
         $(document).ready(function () {
             const liffId = config.liffId_Sitsumonsoudan;
             initializeLiff(liffId);
-        })
+        });
         function initializeLiff(liffId) {
             liff.init({
                 liffId: liffId
             }).then(() => {
-                initializeApp();
+                // LIFFの初期化成功
             }).catch((err) => {
-                console.log('LIFF Initialization failed ', err);
+                console.error('LIFF Initialization failed ', err);
             });
         }
-        function sendText(text) {
-            liff.sendMessages([{
-                'type': 'text',
-                'text': text
-            }]).then(function () {
-                liff.closeWindow();
-            }).catch(function (error) {
-                window.alert('Failed to send message ' + error);
-            });
-        }
-        const params = (new URL(document.location)).searchParams;
-        const key = params.get('key');
         $(function () {
-            $('form').submit(function () {
+            $('#myForm').submit(function (e) {
+                e.preventDefault();
                 const theme  = $('select[name="theme"]').val();
                 const syurui = $('select[name="syurui"]').val();
                 const naiyou = $('textarea[name="naiyou"]').val();
-                const msg = `【質問・相談】
-
-テーマ: ${theme}
-
-種類: ${syurui}
-
-内容: ${naiyou}`;
-                sendText(msg);
-                return false;
+                const data = { theme: theme, syurui: syurui, naiyou: naiyou };
+                $.ajax({
+                    url: 'GASのURL', // GASのURLを設定
+                    type: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        liff.closeWindow(); // 送信成功後にLIFFを閉じる
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         });
     </script>
