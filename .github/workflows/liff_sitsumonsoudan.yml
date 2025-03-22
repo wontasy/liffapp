@@ -12,8 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set LIFF_ID environment variable
-        run: echo "LIFF_ID_SITSUMONSOUDAN=${{ secrets.LIFF_ID_SITSUMONSOUDAN }}" >> $GITHUB_ENV
+      - name: Set LIFF_ID environment variables
+        run: |
+          echo "LIFF_ID_SITSUMONSOUDAN=${{ secrets.LIFF_ID_SITSUMONSOUDAN }}" >> $GITHUB_ENV
+          echo "LIFF_ID_SIIRESOUDAN=${{ secrets.LIFF_ID_SIIRESOUDAN }}" >> $GITHUB_ENV
 
       - name: Generate config.js
         run: |
@@ -21,11 +23,15 @@ jobs:
             echo "Error: LIFF_ID_SITSUMONSOUDAN environment variable is not set."
             exit 1
           fi
-          echo "const config = { liffId: '${{ env.LIFF_ID_SITSUMONSOUDAN }}' };" > config.js
+          if [ -z "${{ env.LIFF_ID_SIIRESOUDAN }}" ]; then
+            echo "Error: LIFF_ID_SIIRESOUDAN environment variable is not set."
+            exit 1
+          fi
+          echo "const config = { liffId_Sitsumonsoudan: '${{ env.LIFF_ID_SITSUMONSOUDAN }}', liffId_Siiresoudan: '${{ env.LIFF_ID_SIIRESOUDAN }}' };" > config.js
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
-          publish_branch: gh-pages # これが重要
+          publish_branch: gh-pages
