@@ -1,0 +1,30 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set LIFF_ID environment variable
+        run: echo "LIFF_ID_SITSUMONSOUDAN=${{ secrets.LIFF_ID_SITSUMONSOUDAN }}" >> $GITHUB_ENV
+
+      - name: Generate config.js
+        run: |
+          if [ -z "${{ env.LIFF_ID_SITSUMONSOUDAN }}" ]; then
+            echo "Error: LIFF_ID_SITSUMONSOUDAN environment variable is not set."
+            exit 1
+          fi
+          echo "const config = { liffId: '${{ env.LIFF_ID_SITSUMONSOUDAN }}' };" > config.js
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
