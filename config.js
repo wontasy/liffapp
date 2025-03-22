@@ -1,3 +1,1 @@
-const config = {
-  liffId: process.env.LIFF_ID_SITSUMONSOUDAN,
-};
+const config = { liffId: '2007075579-Zn5PR3rD' };
