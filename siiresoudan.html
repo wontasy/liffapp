@@ -1,0 +1,142 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仕入れ相談フォーム</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="config.js"></script>
+</head>
+<body>
+    <form class="w-75 mx-auto">
+        <p class="mt-3">ブランド *</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="brand" placeholder="" required>
+        </div>
+        <p class="mt-3">性別 *</p>
+        <div>
+            <select class="form-control w-100 mt-1" name="sex" required>
+                <option value="---">---</option>
+                <option value="レディース">レディース</option>
+                <option value="メンズ">メンズ</option>
+                <option value="すべて">すべて</option>
+            </select>
+        </div>
+        <p class="mt-3">ジャンル *</p>
+        <div>
+            <select class="form-control w-100 mt-1" name="genres" required>
+                <option value="---">---</option>
+                <option value="トップス">トップス</option>
+                <option value="ジャケット・アウター">ジャケット・アウター</option>
+                <option value="パンツ">パンツ</option>
+                <option value="スカート">スカート</option>
+                <option value="ワンピース">ワンピース</option>
+                <option value="バッグ">バッグ</option>
+                <option value="アクセサリー">アクセサリー</option>
+                <option value="小物">小物</option>
+                <option value="靴">靴</option>
+                <option value="スーツ・フォーマル・ドレス">スーツ・フォーマル・ドレス</option>
+                <option value="レディースセットアップ">レディースセットアップ</option>
+                <option value="その他">その他</option>
+            </select>
+        </div>
+        <p class="mt-3">商品の状態</p>
+        <div>
+            <select class="form-control w-100 mt-1" name="condition">
+                <option value="---">---</option>
+                <option value="新品、未使用">新品、未使用</option>
+                <option value="未使用に近い">未使用に近い</option>
+                <option value="目立った傷や汚れなし">目立った傷や汚れなし</option>
+                <option value="やや傷や汚れあり">やや傷や汚れあり</option>
+                <option value="傷や汚れあり">傷や汚れあり</option>
+            </select>
+        </div>
+        <p class="mt-3">入札する価格(円) *</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="bidprice" placeholder="" required>
+        </div>
+        <p class="mt-3">送料(円)</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="postage" placeholder="">
+        </div>
+        <p class="mt-3">相場の予想(円)～(円) *</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="expected" placeholder="" required>
+        </div>
+        <p class="mt-3">利益の予想(円) *</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="profit" placeholder="" required>
+        </div>
+        <p class="mt-3">自分の考え、仕入の根拠 *</p>
+        <div>
+            <textarea class="form-control w-100 mt-1" name="thought" rows="5" required></textarea>
+        </div>
+        <p class="mt-3">仕入れ商品URL *</p>
+        <div>
+            <input class="form-control w-100 mt-1" name="url" placeholder="" required>
+        </div>
+        <p class="mt-3">*は必須項目</p>
+        <p class="mt-3">以下は別途、画像にてお送りください！</p>
+        <p class="mt-3">+メルカリで相場を調べた画面のスクリーンショット</p>
+        <p class="mt-3">+メルカリで相場判断の参考にした商品のスクショ</p>
+        <input type="submit" class="mt-4 btn btn-primary" value="送信">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <script>
+        $(document).ready(function () {
+            const liffId = config.liffId_Siiresoudan;
+            initializeLiff(liffId);
+        });
+        function initializeLiff(liffId) {
+            liff.init({
+                liffId: liffId
+            }).then(() => {
+                // LIFFの初期化成功
+            }).catch((err) => {
+                console.error('LIFF Initialization failed ', err);
+            });
+        }
+        function sendText(text) {
+            liff.sendMessages([{
+                'type': 'text',
+                'text': text
+            }]).then(function () {
+                liff.closeWindow();
+            }).catch(function (error) {
+                console.error('Failed to send message ', error);
+            });
+        }
+        $(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
+                const brand = $('input[name="brand"]').val();
+                const sex = $('select[name="sex"]').val();
+                const genres = $('select[name="genres"]').val();
+                const condition = $('select[name="condition"]').val();
+                const bidprice = $('input[name="bidprice"]').val();
+                const postage = $('input[name="postage"]').val();
+                const expected = $('input[name="expected"]').val();
+                const profit = $('input[name="profit"]').val();
+                const thought = $('textarea[name="thought"]').val();
+                const url = $('input[name="url"]').val();
+                const msg = `
+ブランド: ${brand}
+性別: ${sex}
+ジャンル: ${genres}
+商品の状態: ${condition}
+入札する価格(円): ${bidprice}
+送料(円): ${postage}
+相場の予想(円): ${expected}
+利益の予想(円): ${profit}
+考えや根拠: ${thought}
+仕入れ商品URL: ${url}
+`;
+                sendText(msg);
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
