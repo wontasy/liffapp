@@ -75,7 +75,8 @@
         <div>
             <input class="form-control w-100 mt-1" name="url" placeholder="" required>
         </div>
-        <p class="mt-3">*は必須項目</p>
+        <p class="mt-3" style="text-align: right;">（*は必須項目）</p>
+        <br>
         <p class="mt-3">以下は別途、画像にてお送りください！</p>
         <p class="mt-3">+メルカリで相場を調べた画面のスクリーンショット</p>
         <p class="mt-3">+メルカリで相場判断の参考にした商品のスクショ</p>
@@ -123,14 +124,24 @@
                 const url = $('input[name="url"]').val();
                 const msg = `
 ブランド: ${brand}
+
 性別: ${sex}
+
 ジャンル: ${genres}
+
 商品の状態: ${condition}
-入札する価格(円): ${bidprice}
-送料(円): ${postage}
-相場の予想(円): ${expected}
-利益の予想(円): ${profit}
-考えや根拠: ${thought}
+
+・入札する価格(円): ${bidprice}
+
+・送料(円): ${postage}
+
+・相場の予想(円): ${expected}
+
+・利益の予想(円): ${profit}
+
+考えや根拠:
+ ${thought}
+
 仕入れ商品URL: ${url}
 `;
                 sendText(msg);
