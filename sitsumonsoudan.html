@@ -77,13 +77,9 @@
 
 種類: ${syurui}
 
-内容: ${naiyou}`;
+内容: 
+${naiyou}`;
                 sendText(msg);
-
-                // GASのWebアプリケーションURLにデータを送信
-                const gasUrl = '${{ env.GAS_WEB_APP_URL }}'; // 環境変数からGASのWebアプリケーションURLを取得
-                $.post(gasUrl, { theme: theme, syurui: syurui, naiyou: naiyou });
-
                 return false;
             });
         });
