@@ -1,0 +1,23 @@
+// LIFFアプリ（HTML）のコード例
+const data = {
+  variable1: "value1",
+  variable2: "value2"
+};
+
+fetch("GASのURL", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+})
+.then(response => {
+  if (response.ok) {
+    console.log("データ送信成功！");
+  } else {
+    console.error("データ送信失敗！");
+  }
+})
+.catch(error => {
+  console.error("エラー:", error);
+});
