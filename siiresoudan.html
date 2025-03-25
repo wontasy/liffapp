@@ -124,13 +124,17 @@
                 const url = $('input[name="url"]').val();
                 const msg = `【仕入れ相談】
 
-ブランド: ${brand}
+ブランド:
+${brand}
 
-性別: ${sex}
+性別:
+${sex}
 
-ジャンル: ${genres}
+ジャンル:
+${genres}
 
-商品の状態: ${condition}
+商品の状態:
+${condition}
 
 ・入札する価格(円): ${bidprice}
 
@@ -143,7 +147,8 @@
 考えや根拠:
  ${thought}
 
-仕入れ商品URL: ${url}`;
+仕入れ商品URL:
+${url}`;
                 sendText(msg);
                 return false;
             });
