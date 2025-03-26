@@ -13,9 +13,9 @@
         <div>
             <select class="form-control w-100 mt-1" name="theme" required>
                 <option value="---">---</option>
-                <option value="メルカリについて">メルカリについて</option>
-                <option value="ヤフオクについて">ヤフオクについて</option>
-                <option value="その他">その他</option>
+                <option value="メルカリ">メルカリについて</option>
+                <option value="ヤフオク">ヤフオクについて</option>
+                <option value="その他">その他について</option>
             </select>
         </div>
         <p class="mt-3">種類を教えてください！</p>
@@ -28,7 +28,7 @@
                 <option value="取引について">取引について</option>
                 <option value="支払いについて">支払いについて</option>
                 <option value="アカウントについて">アカウントについて</option>
-                <option value="その他">その他</option>
+                <option value="その他について">その他について</option>
             </select>
         </div>
         <p class="mt-3">内容をどうぞ！</p>
@@ -73,9 +73,7 @@
                 const naiyou = $('textarea[name="naiyou"]').val();
                 const msg = `【質問・相談】
 
-テーマ: ${theme}
-
-種類: ${syurui}
+${theme}の${syurui}
 
 内容:
 ${naiyou}`;
